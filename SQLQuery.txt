@@ -1,0 +1,133 @@
+3.Выбрать всех сторудников, которые работают в одном городе с 'DENNIS'. 
+select e.first_name, e.last_name from employee e
+join department d on e.department_id = d.department_id
+join [location] l on d.location_id=l.location_id
+where l.regional_group=(select l.regional_group
+from employee ee
+join department dd on ee.department_id=dd.department_id
+join [LOCATION] ll on dd.location_id=ll.location_id
+where ee.last_name='Dennis')
+
+first_name      last_name
+--------------- ---------------
+CAROL           CLARK
+FRANCIS         KING
+BARBARA         MILLER
+GRACE           ROBERTS
+MICHAEL         DOUGLAS
+MATTHEW         FISHER
+CHRIS           ALBERTS
+RAYMOND         PORTER
+JEAN            DOYLE
+DANIEL          PETERS
+KAREN           SHAW
+ALICE           JENSEN
+LESLIE          BAKER
+TERRY           JONES
+JOHN            SMITH
+JENNIFER        FORD
+DONALD          SCOTT
+DIANE           ADAMS
+LIVIA           WEST
+JAMES           MURRAY
+LYNN            DENNIS
+SARAH           DUNCAN
+GREGORY         LANGE
+RICHARD         LEWIS
+KENNETH         MARTIN
+MARION          BLAKE
+CYNTHIA         WARD
+KEVIN           ALLEN
+FRED            JAMES
+MARY            TURNER
+DENISE          SOMMERS
+PAUL            ROSS
+
+(32 rows affected)
+2.Выбрать названия товаров, которые покупаются в штате 'CA' (Калифорния). 
+select p.description from product p 
+join item i on p.product_id=i.product_id
+join SALES_ORDER s on i.order_id=s.order_id
+join customer c on s.customer_id=c.customer_id
+where c.state='CA'
+
+description
+------------------------------
+ACE TENNIS RACKET II
+SB ENERGY BAR-6 PACK
+ACE TENNIS RACKET I
+ACE TENNIS BALLS-3 PACK
+ACE TENNIS RACKET I
+ACE TENNIS NET
+ACE TENNIS RACKET II
+ACE TENNIS RACKET I
+ACE TENNIS RACKET II
+ACE TENNIS BALLS-3 PACK
+ACE TENNIS NET
+SP TENNIS RACKET
+SP JUNIOR RACKET
+RH: "GUIDE TO TENNIS"
+RH: "GUIDE TO TENNIS"
+ACE TENNIS BALLS-6 PACK
+SP TENNIS RACKET
+ACE TENNIS BALLS-6 PACK
+ACE TENNIS RACKET II
+ACE TENNIS BALLS-3 PACK
+ACE TENNIS NET
+ACE TENNIS RACKET I
+ACE TENNIS BALLS-3 PACK
+ACE TENNIS NET
+ACE TENNIS RACKET II
+ACE TENNIS RACKET I
+ACE TENNIS RACKET II
+SP JUNIOR RACKET
+ACE TENNIS BALLS-6 PACK
+ACE TENNIS RACKET I
+ACE TENNIS BALLS-3 PACK
+ACE TENNIS BALLS-6 PACK
+ACE TENNIS RACKET II
+ACE TENNIS BALLS-3 PACK
+ACE TENNIS BALLS-6 PACK
+ACE TENNIS RACKET II
+ACE TENNIS BALLS-3 PACK
+ACE TENNIS NET
+RH: "GUIDE TO TENNIS"
+SB ENERGY BAR-6 PACK
+ACE TENNIS RACKET I
+ACE TENNIS RACKET II
+ACE TENNIS BALLS-3 PACK
+ACE TENNIS BALLS-6 PACK
+ACE TENNIS NET
+SP TENNIS RACKET
+SP JUNIOR RACKET
+RH: "GUIDE TO TENNIS"
+SB ENERGY BAR-6 PACK
+SB VITA SNACK-6 PACK
+ACE TENNIS RACKET I
+ACE TENNIS RACKET II
+ACE TENNIS BALLS-3 PACK
+SB VITA SNACK-6 PACK
+SB ENERGY BAR-6 PACK
+RH: "GUIDE TO TENNIS"
+ACE TENNIS BALLS-6 PACK
+ACE TENNIS RACKET I
+SB ENERGY BAR-6 PACK
+RH: "GUIDE TO TENNIS"
+ACE TENNIS RACKET II
+ACE TENNIS BALLS-3 PACK
+
+(62 rows affected)
+4.Выбрать среднюю зарплату, которая приходится на одного сотрудника, работающего в городе 'NEW YORK'.
+select avg(e.salary) as 'average salary in New York' from employee e
+join department d on e.department_id=d.department_id
+join [location] l on d.location_id=l.location_id
+where l.regional_group='NEW YORK'
+
+average salary in New York
+---------------------------------------
+2151.923076
+
+(1 row affected)
+
+select * from PRICE p join ITEM i on p.product_id = i.product_id join SALES_ORDER so on i.order_id = so.order_id
+where ((100 * p.min_price) / i.actual_price) > 25 and datepart(year, so.ship_date) = 1991;
