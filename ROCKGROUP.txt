@@ -1,0 +1,167 @@
+CREATE TABLE City ( 
+    CityId int NOT NULL,
+    CountryId int NOT NULL
+)
+;
+
+CREATE TABLE Country ( 
+    CountryId int NOT NULL
+)
+;
+
+CREATE TABLE Format ( 
+    FormatId int NOT NULL
+)
+;
+
+CREATE TABLE MusicType ( 
+    Types int NOT NULL
+)
+;
+
+
+
+
+CREATE TABLE Orginizer ( 
+    OrginizerId int NOT NULL
+)
+;
+
+CREATE TABLE Perfomance ( 
+    PerfomanceId int NOT NULL,
+    Perfomance int NOT NULL
+)
+;
+
+CREATE TABLE Producer ( 
+    ProducerId int NOT NULL
+)
+;
+
+CREATE TABLE Rockgroups ( 
+    Since int NOT NULL,
+    NameOfGroup varchar(50) NOT NULL,
+    ProducerId int NOT NULL,
+    Types int NOT NULL,
+    StructreId int NOT NULL,
+    Perfomance int NOT NULL
+)
+;
+
+CREATE TABLE structure ( 
+    NameAndSecondName varchar(50) NOT NULL,
+    TypeOfSongid int NOT NULL,
+    StructreId int NOT NULL
+)
+;
+
+
+
+CREATE TABLE TheFestival ( 
+    Dates datetime NOT NULL,
+    NameOfFestival varchar(50) NOT NULL,
+    CityId int,
+    FormatId int NOT NULL,
+    PerfomanceId int NOT NULL,
+    OrginizerId int NOT NULL
+)
+;
+
+CREATE TABLE TypeOfSong ( 
+    TypesOfSongid int NOT NULL
+)
+;
+
+
+ALTER TABLE City ADD CONSTRAINT PK_City 
+    PRIMARY KEY (CityId, CountryId)
+;
+
+ALTER TABLE Country ADD CONSTRAINT PK_Country 
+    PRIMARY KEY (CountryId)
+;
+
+ALTER TABLE Format ADD CONSTRAINT PK_Format 
+    PRIMARY KEY (FormatId)
+;
+
+ALTER TABLE MusicType ADD CONSTRAINT PK_MusicType 
+    PRIMARY KEY (Types)
+;
+
+ALTER TABLE MusicType ADD CONSTRAINT PK_MusicType 
+PRIMARY KEY (Types) 
+
+;
+
+
+ALTER TABLE Orginizer ADD CONSTRAINT PK_Orginizer 
+    PRIMARY KEY (OrginizerId)
+;
+
+ALTER TABLE Perfomance ADD CONSTRAINT PK_Perfomance 
+    PRIMARY KEY (PerfomanceId, Perfomance)
+;
+
+ALTER TABLE Producer ADD CONSTRAINT PK_Producer 
+    PRIMARY KEY (ProducerId)
+;
+
+ALTER TABLE Rockgroups ADD CONSTRAINT PK_New 
+    PRIMARY KEY (Since, NameOfGroup, PerfomanceId, ProducerId, Types, StructreId, Perfomance)
+;
+
+ALTER TABLE structure ADD CONSTRAINT PK_structure 
+    PRIMARY KEY (NameAndSecondName, TypeOfSongid, StructreId)
+;
+
+ALTER TABLE TheFestival ADD CONSTRAINT PK_TheFestival 
+    PRIMARY KEY (Dates, NameOfFestival, FormatId, PerfomanceId, OrginizerId)
+;
+
+ALTER TABLE TypeOfSong ADD CONSTRAINT PK_TypeOfSong 
+    PRIMARY KEY (TypesOfSongid)
+;
+
+
+
+
+ALTER TABLE City ADD CONSTRAINT FK_City_Country 
+    FOREIGN KEY (CountryId) REFERENCES Country (CountryId)
+;
+
+ALTER TABLE Perfomance ADD CONSTRAINT FK_Perfomance_Rockgroups 
+    FOREIGN KEY (Perfomance) REFERENCES Rockgroups (Since, NameOfGroup, PerfomanceId, ProducerId, Types, StructreId, Perfomance)
+;
+
+ALTER TABLE Perfomance ADD CONSTRAINT FK_Perfomance_TheFestival 
+    FOREIGN KEY (PerfomanceId) REFERENCES TheFestival (Dates, NameOfFestival, FormatId, PerfomanceId, OrginizerId)
+;
+
+ALTER TABLE Rockgroups ADD CONSTRAINT FK_Rockgroups_MusicType 
+    FOREIGN KEY (Types) REFERENCES MusicType (Types)
+;
+
+ALTER TABLE Rockgroups ADD CONSTRAINT FK_Rockgroups_Producer 
+    FOREIGN KEY (ProducerId) REFERENCES Producer (ProducerId)
+;
+
+ALTER TABLE structure ADD CONSTRAINT FK_structure_Rockgroups 
+    FOREIGN KEY (StructreId) REFERENCES Rockgroups (Since, NameOfGroup, PerfomanceId, ProducerId, Types, StructreId, Perfomance)
+;
+
+ALTER TABLE structure ADD CONSTRAINT FK_structure_TypeOfSong 
+    FOREIGN KEY (TypeOfSongid) REFERENCES TypeOfSong (TypesOfSongid)
+;
+
+ALTER TABLE TheFestival ADD CONSTRAINT FK_TheFestival_City 
+    FOREIGN KEY (CityId) REFERENCES City (CityId, CountryId)
+;
+
+ALTER TABLE TheFestival ADD CONSTRAINT FK_TheFestival_Format 
+    FOREIGN KEY (FormatId) REFERENCES Format (FormatId)
+;
+
+ALTER TABLE TheFestival ADD CONSTRAINT FK_TheFestival_Orginizer 
+    FOREIGN KEY (OrginizerId) REFERENCES Orginizer (OrginizerId)
+;
